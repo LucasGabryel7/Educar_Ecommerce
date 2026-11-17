@@ -132,4 +132,15 @@ public class DtoValidationTest {
         assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("horarioTermino")));
         assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("idAluno")));
     }
+
+    @Test
+    public void testStatusPedidoDtoValidation() {
+        StatusPedidoDTO valido = new StatusPedidoDTO(br.unitins.model.StatusPedido.PAGO);
+        assertTrue(validator.validate(valido).isEmpty());
+
+        StatusPedidoDTO invalido = new StatusPedidoDTO(null);
+        Set<ConstraintViolation<StatusPedidoDTO>> violations = validator.validate(invalido);
+        assertFalse(violations.isEmpty());
+        assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("status")));
+    }
 }
